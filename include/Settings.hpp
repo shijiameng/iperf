@@ -155,6 +155,9 @@ typedef struct thread_Settings {
     // Hopefully int64_t's
     max_size_t mUDPRate;            // -b or -u
     max_size_t mAmount;             // -n or -t
+    max_size_t mMin;				// Minimum Value (-b pareto)
+    double	   mParetoK;			// k parameter of Pareto (-b pareto)
+    double	   mExponLambda;		// lambda parameter of Exponantial (-b expon)
     // doubles
     double mInterval;               // -i
     // shorts
@@ -210,6 +213,8 @@ typedef struct thread_Settings {
 #define FLAG_SINGLECLIENT   0x00100000
 #define FLAG_SINGLEUDP      0x00200000
 #define FLAG_CONGESTION     0x00400000
+#define FLAG_PARETO			0x00800000
+#define FLAG_EXPON			0x01000000
 
 #define isBuflenSet(settings)      ((settings->flags & FLAG_BUFLENSET) != 0)
 #define isCompat(settings)         ((settings->flags & FLAG_COMPAT) != 0)
@@ -226,6 +231,9 @@ typedef struct thread_Settings {
 #define isModeTime(settings)       ((settings->flags & FLAG_MODETIME) != 0)
 #define isReport(settings)         ((settings->flags & FLAG_REPORTSETTINGS) != 0)
 #define isMulticast(settings)      ((settings->flags & FLAG_MULTICAST) != 0)
+#define isPareto(settings)		   ((settings->flags & FLAG_PARETO) != 0)
+#define isExpon(settings)		   ((settings->flags & FLAG_EXPON) != 0)
+
 // Active Low for Reports
 #define isSettingsReport(settings) ((settings->flags & FLAG_NOSETTREPORT) == 0)
 #define isConnectionReport(settings)  ((settings->flags & FLAG_NOCONNREPORT) == 0)
@@ -260,6 +268,8 @@ typedef struct thread_Settings {
 #define setSingleClient(settings)  settings->flags |= FLAG_SINGLECLIENT
 #define setSingleUDP(settings)     settings->flags |= FLAG_SINGLEUDP
 #define setCongestionControl(settings) settings->flags |= FLAG_CONGESTION
+#define setPareto(settings)		   settings->flags |= FLAG_PARETO
+#define setExpon(settings)		   settings->flags |= FLAG_EXPON
 
 #define unsetBuflenSet(settings)   settings->flags &= ~FLAG_BUFLENSET
 #define unsetCompat(settings)      settings->flags &= ~FLAG_COMPAT
@@ -284,7 +294,8 @@ typedef struct thread_Settings {
 #define unsetSingleClient(settings)   settings->flags &= ~FLAG_SINGLECLIENT
 #define unsetSingleUDP(settings)      settings->flags &= ~FLAG_SINGLEUDP
 #define unsetCongestionControl(settings) settings->flags &= ~FLAG_CONGESTION
-
+#define unsetPareto(settings) 		settings->flags &= ~FLAG_PARETO
+#define unsetExpon(settings)		settings->flags &= ~FLAG_EXPON
 
 #define HEADER_VERSION1 0x80000000
 #define RUN_NOW         0x00000001

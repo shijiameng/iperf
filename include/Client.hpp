@@ -56,6 +56,7 @@
 
 #include "Settings.hpp"
 #include "Timestamp.hpp"
+#include "ProbModel.hpp"
 
 /* ------------------------------------------------------------------- */
 class Client {
@@ -81,12 +82,13 @@ public:
 
     // client connect
     void Connect( );
-
+	
 protected:
     thread_Settings *mSettings;
     char* mBuf;
     Timestamp mEndTime;
     Timestamp lastPacketTime;
+    ProbModel *mProbModel;
 
 }; // end class Client
 
